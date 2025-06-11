@@ -4,23 +4,24 @@ import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import typeOrmConfig from './config/typeorm';
+import { DataSourceOptions } from 'typeorm';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: './.env',
+      load: [typeOrmConfig],
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        database: configService.get('BD_NAME'),
-        host: configService.get('BD_HOST'),
-        port: configService.get('BD_PORT'),
-        username: configService.get('BD_USERNAME'),
-        password: configService.get('BD_PASSWORD'),
-      }),
+      useFactory: (configService: ConfigService): DataSourceOptions => {
+        const config = configService.get<DataSourceOptions>('typeorm');
+        if (!config) {
+          throw new Error('TypeORM configuration not found');
+        }
+        return config;
+      },
     }),
     UsersModule,
     ProductsModule,
