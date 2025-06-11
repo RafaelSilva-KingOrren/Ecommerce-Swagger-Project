@@ -9,6 +9,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
+  @UseGuards(AuthGuard)
   getUsers(@Query('page') page: number, @Query('limit') limit: number) {
     if (page && limit) {
       return this.usersService.getUsers(+page, +limit);
@@ -17,6 +18,7 @@ export class UsersController {
   }
 
   @Get('name')
+  @UseGuards(AuthGuard)
   getUserByName(@Query('name') name: string) {
     return this.usersService.getUserByName(name);
   }
