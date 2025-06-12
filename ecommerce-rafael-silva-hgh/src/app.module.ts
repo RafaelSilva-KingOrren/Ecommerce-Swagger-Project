@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { CategoriesModule } from './modules/categories/categories.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeorm from './config/typeorm';
@@ -11,6 +12,7 @@ import typeorm from './config/typeorm';
     UsersModule,
     ProductsModule,
     AuthModule,
+    CategoriesModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeorm],

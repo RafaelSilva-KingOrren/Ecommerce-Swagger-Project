@@ -33,9 +33,9 @@ export class ProductsService {
     return 'Products added successfully';
   }
 
-  async getProducts(): Promise<Products[]> {
-    return this.productsRepository.find();
-  }
+  // async getProducts(): Promise<Products[]> {
+  //   return this.productsRepository.find();
+  // }
 
   async getProductsById(id: string): Promise<Products | null> {
     const product = await this.productsRepository.findOne({

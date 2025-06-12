@@ -17,6 +17,7 @@ export class CategoriesService {
     const categories = categoriesArray.map((category) => ({ name: category }));
 
     await this.categoriesRepository.upsert(categories, ['name']);
+    console.log('GET /categories/seeder llamado');
     return 'This action adds a new category';
   }
 

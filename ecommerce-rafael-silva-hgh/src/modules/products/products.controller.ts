@@ -5,9 +5,9 @@ import { ProductsService } from './products.service';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Get()
+  @Get('seeder')
   getProducts() {
-    return this.productsService.getProducts();
+    return this.productsService.create();
   }
   @Get(':id')
   getProductsById(@Param('id') id: string) {
