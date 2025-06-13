@@ -14,7 +14,7 @@ export class Orders {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 50, nullable: false })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   date: Date;
 
   @OneToOne(() => OrderDetails, (orderDetails) => orderDetails.orders, {

@@ -68,6 +68,8 @@ export class OrdersService {
     orderDetail.products = productsArray;
 
     await this.orderDetailsRepository.save(orderDetail);
+    newOrder.orderDetails = orderDetail;
+    await this.ordersRepository.save(newOrder);
     return await this.ordersRepository.find({
       where: { id: newOrder.id },
       relations: ['orderDetails'],
