@@ -1,17 +1,30 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { AuthRepository } from './auth.repository';
 import { AuthLogin } from './auth.interface';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly authRepository: AuthRepository) {}
+  private auth: AuthLogin[] = [
+    {
+      id: 1,
+      email: 'king@example.com',
+      password: '123',
+    },
+    {
+      id: 2,
+      email: 'orren@example.com',
+      password: '123',
+    },
+  ];
 
   async getAuth() {
-    return this.authRepository.getAuth();
+    return this.auth;
   }
 
   async validateUser(email: string, password: string): Promise<boolean> {
-    return this.authRepository.validateCredentials(email, password);
+    const user = this.auth.find(
+      (user) => user.email === email && user.password === password,
+    );
+    return !!user;
   }
 
   async login(credentials: AuthLogin) {

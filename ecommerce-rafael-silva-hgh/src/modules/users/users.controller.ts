@@ -26,7 +26,7 @@ export class UsersController {
   @Get(':id')
   @UseGuards(AuthGuard)
   getUserById(@Param('id') id: string) {
-    return this.usersService.getUserById(Number(id));
+    return this.usersService.getUserById(id);
   }
 
   @Post()
@@ -38,12 +38,12 @@ export class UsersController {
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   updateUser(@Param('id') id: string, @Body() updateData: Partial<User>) {
-    return this.usersService.updateUser(Number(id), updateData);
+    return this.usersService.updateUser(id, updateData);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   deleteUser(@Param('id') id: string) {
-    return this.usersService.deleteUser(Number(id));
+    return this.usersService.deleteUser(id);
   }
 }
