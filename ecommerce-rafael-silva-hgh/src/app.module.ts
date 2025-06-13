@@ -3,6 +3,7 @@ import { UsersModule } from './modules/users/users.module';
 import { ProductsModule } from './modules/products/products.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CategoriesModule } from './modules/categories/categories.module';
+import { OrdersModule } from './modules/orders/order.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeorm from './config/typeorm';
@@ -13,6 +14,7 @@ import typeorm from './config/typeorm';
     ProductsModule,
     AuthModule,
     CategoriesModule,
+    OrdersModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeorm],
