@@ -24,7 +24,7 @@ export class OrdersService {
     private readonly productsRepository: Repository<Products>,
   ) {}
 
-  async create(userId: string, products: Partial<Products[]>) {
+  async addOrder(userId: string, products: Partial<Products[]>) {
     const user: User | null = await this.usersRepository.findOneBy({
       id: userId,
     });
@@ -70,9 +70,37 @@ export class OrdersService {
     await this.orderDetailsRepository.save(orderDetail);
     newOrder.orderDetails = orderDetail;
     await this.ordersRepository.save(newOrder);
-    return await this.ordersRepository.find({
+
+    const orderWithDetails = await this.ordersRepository.findOne({
       where: { id: newOrder.id },
-      relations: ['orderDetails'],
+      relations: ['orderDetails', 'orderDetails.products'],
+    });
+
+    if (!orderWithDetails || !orderWithDetails.orderDetails) {
+      throw new NotFoundException(
+        'Error al recuperar los detalles de la orden',
+      );
+    }
+
+    return {
+      message: `Pedido realizado!`,
+      data: {
+        id: orderWithDetails.id,
+        date: orderWithDetails.date,
+        total: orderWithDetails.orderDetails.price,
+        products: orderWithDetails.orderDetails.products.map((product) => ({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+        })),
+      },
+    };
+  }
+
+  async getOrder(id: string) {
+    return await this.ordersRepository.findOne({
+      where: { id },
+      relations: ['orderDetails', 'orderDetails.products'],
     });
   }
 }

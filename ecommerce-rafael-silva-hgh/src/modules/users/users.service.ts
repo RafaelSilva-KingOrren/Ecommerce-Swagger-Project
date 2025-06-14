@@ -32,6 +32,7 @@ export class UsersService {
   async getUserById(id: string) {
     const user = await this.usersRepository.findOne({
       where: { id },
+      relations: ['orders', 'orders.orderDetails'],
     });
     if (user) {
       const { password, ...userWithoutPassword } = user;
