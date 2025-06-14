@@ -1,8 +1,9 @@
 // eslint-disable-next-line prettier/prettier
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './interfaces/user.interface';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { UserRegisterDTO } from './dto/UserDTO';
 
 @Controller('users')
 export class UsersController {
@@ -25,25 +26,28 @@ export class UsersController {
 
   @Get(':id')
   @UseGuards(AuthGuard)
-  getUserById(@Param('id') id: string) {
+  getUserById(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.getUserById(id);
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  createUser(@Body() user: User) {
+  createUser(@Body() user: UserRegisterDTO) {
     return this.usersService.createUser(user);
   }
 
   @Put(':id')
   @HttpCode(HttpStatus.OK)
-  updateUser(@Param('id') id: string, @Body() updateData: Partial<User>) {
+  updateUser(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateData: Partial<User>,
+  ) {
     return this.usersService.updateUser(id, updateData);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  deleteUser(@Param('id') id: string) {
+  deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.deleteUser(id);
   }
 }
