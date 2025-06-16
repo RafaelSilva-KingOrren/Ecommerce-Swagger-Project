@@ -7,11 +7,13 @@ import { OrdersModule } from './modules/orders/order.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeorm from './config/typeorm';
+import { FileUploadModule } from './modules/fileUpload/file.upload.module';
 
 @Module({
   imports: [
     UsersModule,
     ProductsModule,
+    FileUploadModule,
     AuthModule,
     CategoriesModule,
     OrdersModule,
