@@ -4,13 +4,17 @@ import { UsersService } from './users.service';
 import { User } from './interfaces/user.interface';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { UserRegisterDTO } from './dto/UserDTO';
+import { RolesGuard } from 'src/guards/roles.guard';
+import { Roles } from 'src/decorators/roles.decorator';
+import { Role } from 'src/roles.enum';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   getUsers(@Query('page') page: number, @Query('limit') limit: number) {
     if (page && limit) {
       return this.usersService.getUsers(+page, +limit);
@@ -19,7 +23,8 @@ export class UsersController {
   }
 
   @Get('name')
-  @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   getUserByName(@Query('name') name: string) {
     return this.usersService.getUserByName(name);
   }

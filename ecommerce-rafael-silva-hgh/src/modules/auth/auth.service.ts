@@ -66,7 +66,7 @@ export class AuthService {
     const passwordMatch = await bcrypt.compare(credentials.password, findUser.password);
     if (!passwordMatch) throw new BadRequestException(`Correo o contraseña incorrectos`);
 
-      const payload = {
+      const payload = {     //payload
         id: findUser.id,
         email: findUser.email,
         isAdmin: findUser.isAdmin,
