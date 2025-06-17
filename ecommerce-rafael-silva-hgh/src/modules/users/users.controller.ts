@@ -30,11 +30,11 @@ export class UsersController {
     return this.usersService.getUserById(id);
   }
 
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  createUser(@Body() user: UserRegisterDTO) {
-    return this.usersService.createUser(user);
-  }
+  // @Post()
+  // @HttpCode(HttpStatus.CREATED)
+  // createUser(@Body() user: UserRegisterDTO) {
+  //   return this.usersService.createUser(user);
+  // }
 
   @Put(':id')
   @HttpCode(HttpStatus.OK)

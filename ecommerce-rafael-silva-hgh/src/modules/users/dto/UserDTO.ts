@@ -49,7 +49,7 @@ export class UserRegisterDTO {
   country: string;
 
   @IsNotEmpty()
-  @MinLength(5, { message: 'La ciudad debe tener al menos 2 caracteres' })
+  @MinLength(5, { message: 'La ciudad debe tener al menos 5 caracteres' })
   @MaxLength(20, { message: 'La ciudad debe tener como máximo 20 caracteres' })
   @IsString({ message: 'La ciudad debe ser una cadena de texto' })
   city: string;
