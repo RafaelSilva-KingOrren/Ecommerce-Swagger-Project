@@ -37,6 +37,7 @@ export class UsersController {
   // }
 
   @Put(':id')
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   updateUser(
     @Param('id', ParseUUIDPipe) id: string,
@@ -46,6 +47,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.deleteUser(id);

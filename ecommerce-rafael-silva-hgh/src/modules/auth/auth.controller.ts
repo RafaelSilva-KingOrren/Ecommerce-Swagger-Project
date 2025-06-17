@@ -2,6 +2,7 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/commo
 import { AuthService } from './auth.service';
 import { AuthLogin } from './auth.interface';
 import { UserRegisterDTO } from '../users/dto/UserDTO';
+import { Auth } from 'typeorm';
 
 @Controller('auth')
 export class AuthController {
@@ -12,9 +13,14 @@ export class AuthController {
     return this.authService.getAuth();
   }
   //admins creator
-  @Post('signin')
+  @Post('signinAdmin')
   async postAuth(@Body() credentials: AuthLogin) {
-    return this.authService.login(credentials);
+    return this.authService.loginAdmin(credentials);
+  }
+
+  @Post('signinUser')
+  async postUser(@Body() credentials: AuthLogin) {
+    return this.authService.loginUser(credentials);
   }
 
   @Post('signup')
